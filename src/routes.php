@@ -1,10 +1,16 @@
 <?php
 // Routes
 
-$app->get('/[{name}]', function ($request, $response, $args) {
-    // Sample log message
-    $this->logger->info("Slim-Skeleton '/' route");
+$app->post('/auth', 'App\Controllers\Auth\AuthController:Auth');
 
-    // Render index view
-    return $this->renderer->render($response, 'index.phtml', $args);
-});
+$app->group('/api/v1/', function () {
+
+    $this->get('{interface}/index', 'App\Controllers\ApiController:index');
+
+    $this->post('{interface}/store', 'App\Controllers\ApiController:store');
+
+    $this->put('{interface}/update', 'App\Controllers\ApiController:update');
+
+    $this->delete('{interface}/delete', 'App\Controllers\ApiController:delete');
+
+})->add($JWT);

@@ -1,4 +1,5 @@
 <?php
+
 return [
     'settings' => [
         'displayErrorDetails' => true, // set to false in production
@@ -17,20 +18,15 @@ return [
         ],
 
         // Database settings
-        'settings' => [
-            // Slim Settings
-            'determineRouteBeforeAppMiddleware' => false,
-            'displayErrorDetails' => true,
-            'db' => [
-                'driver' => 'mysql',
-                'host' => 'localhost',
-                'database' => 'database',
-                'username' => 'root',
-                'password' => '',
-                'charset'   => 'utf8',
-                'collation' => 'utf8_unicode_ci',
-                'prefix'    => '',
-            ]
-        ],
+        'db' => [
+            'driver'    => env('DB_DRIVER', 'mysql'),
+            'host'      => env('DB_HOST', 'localhost'),
+            'database'  => env('DB_DATABASE', 'slim'),
+            'username'  => env('DB_USERNAME', 'root'),
+            'password'  => env('DB_PASSWORD', ''),
+            'charset'   => env('DB_CHARSET', 'utf8'),
+            'collation' => env('DB_COLLATION', 'utf8_unicode_ci'),
+            'prefix'    => env('DB_PREFIX', ''),
+        ]
     ],
 ];

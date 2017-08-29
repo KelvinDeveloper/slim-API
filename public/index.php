@@ -13,9 +13,18 @@ require __DIR__ . '/../vendor/autoload.php';
 
 session_start();
 
+// Init Dotenv
+use Dotenv\Dotenv;
+
+$Dotenv = new Dotenv(__DIR__ . '/../');
+$Dotenv->load();
+
 // Instantiate the app
 $settings = require __DIR__ . '/../src/settings.php';
 $app = new \Slim\App($settings);
+
+// Helpers
+require __DIR__ . '/../src/helpers.php';
 
 // Set up dependencies
 require __DIR__ . '/../src/dependencies.php';

@@ -1,0 +1,45 @@
+<?php
+
+namespace App\Controllers;
+
+use Psr\Http\Message\RequestInterface as Request;
+use Psr\Http\Message\ResponseInterface as Response;
+
+class ApiController
+{
+    private $name;
+    private $model;
+
+    public function __construct($app)
+    {
+        $Path = explode(DIRECTORY_SEPARATOR, $app->request->getUri()->getPath());
+
+        $Model = str_singular( studly_case( $Path[3] ) );
+        $Class = "\\App\\Models\\{$Model}";
+
+        $this->name  = $Model;
+        $this->model = new $Class;
+    }
+
+    public function index (Request $request, Response $response)
+    {
+        $return = $this->model->get();
+
+        return $response->withJSON($return, 200, JSON_UNESCAPED_UNICODE);
+    }
+
+    public function store (Request $request, Response $response)
+    {
+
+    }
+
+    public function update (Request $request, Response $response)
+    {
+
+    }
+
+    public function delete (Request $request, Response $response)
+    {
+
+    }
+}

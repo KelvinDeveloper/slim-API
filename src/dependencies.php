@@ -21,6 +21,7 @@ $container['logger'] = function ($c) {
 // Service factory for the ORM
 $container['db'] = function ($container) {
     $capsule = new \Illuminate\Database\Capsule\Manager;
+
     $capsule->addConnection($container['settings']['db']);
 
     $capsule->setAsGlobal();
@@ -28,3 +29,11 @@ $container['db'] = function ($container) {
 
     return $capsule;
 };
+
+$container['Session'] = function ($container) {
+    $capsule = new \Illuminate\Support\Facades\Session;
+
+    return $capsule;
+};
+
+$app->getContainer()->get('db');
