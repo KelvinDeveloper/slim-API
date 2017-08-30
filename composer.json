@@ -39,7 +39,7 @@
         "test": "phpunit",
         "post-root-package-install": [
             "php -r \"copy('.env.example', '.env');\""
-        ],
+        ]
     },
     "autoload": {
         "psr-4": {
