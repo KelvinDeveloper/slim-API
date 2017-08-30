@@ -21,25 +21,48 @@ class ApiController
         $this->model = new $Class;
     }
 
-    public function index (Request $request, Response $response)
+    public function index (Request $request, Response $response, $args)
     {
-        $return = $this->model->get();
+
+        if ( isset ( $args['id'] ) ) {
+
+            $return = $this->model->find( $args['id'] );
+        } else {
+
+            $return = $this->model->get();
+        }
 
         return $response->withJSON($return, 200, JSON_UNESCAPED_UNICODE);
     }
 
     public function store (Request $request, Response $response)
     {
+        $Post = $request->getParsedBody();
 
+
+        foreach ($Post as $Field => $Value) {
+
+            $this->model->{$Field} = $Value;
+        }
+
+        $return = $this->model->save();
+
+        return $return;
     }
 
-    public function update (Request $request, Response $response)
+    public function update (Request $request, Response $response, $args)
     {
+        $Post = (array) $request->getParsedBody();
 
+        $Update = $this->model->find($args['id']);
+        $Update->make($Post);
+
+        $Update->save();
     }
 
-    public function delete (Request $request, Response $response)
+    public function delete (Request $request, Response $response, $args)
     {
-
+        $Delete = $this->model->find($args['id']);
+        $Delete->delete();
     }
 }

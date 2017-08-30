@@ -1,14 +1,14 @@
 {
-    "name": "slim/slim-skeleton",
-    "description": "A Slim Framework skeleton application for rapid development",
-    "keywords": ["microframework", "rest", "router", "psr7"],
-    "homepage": "http://github.com/slimphp/Slim-Skeleton",
+    "name": "kelvindeveloper/slimapi",
+    "description": "SlimAPI consists of a API REST that works automatically according  to your database developed using Slim Framework.",
+    "keywords": ["microframework", "rest", "router", "psr7", "api", "rest", "slim"],
+    "homepage": "https://github.com/KelvinDeveloper/slim-API",
     "license": "MIT",
     "authors": [
         {
-            "name": "Josh Lockhart",
-            "email": "info@joshlockhart.com",
-            "homepage": "http://www.joshlockhart.com/"
+            "name": "Kelvin Souza",
+            "email": "kelvin.developer@icloud.com",
+            "homepage": "https://kelvinsouza.com"
         }
     ],
     "require": {
@@ -36,12 +36,15 @@
     },
     "scripts": {
         "start": "php -S 0.0.0.0:8080 -t public public/index.php",
-        "test": "phpunit"
+        "test": "phpunit",
+        "post-root-package-install": [
+            "php -r \"copy('.env.example', '.env');\""
+        ],
     },
     "autoload": {
         "psr-4": {
             "App\\Controllers\\": "src/App/Controllers",
             "App\\Models\\": "src/App/Models"
         }
-    }
+    },
 }
