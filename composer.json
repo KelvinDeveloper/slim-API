@@ -46,5 +46,5 @@
             "App\\Controllers\\": "src/App/Controllers",
             "App\\Models\\": "src/App/Models"
         }
-    },
+    }
 }
