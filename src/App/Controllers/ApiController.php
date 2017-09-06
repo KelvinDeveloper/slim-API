@@ -37,17 +37,17 @@ class ApiController
 
     public function store (Request $request, Response $response)
     {
+
         $Post = $request->getParsedBody();
 
+        if ( method_exists($this->model, 'StoreData') ) {
 
-        foreach ($Post as $Field => $Value) {
-
-            $this->model->{$Field} = $Value;
+            $Post = $this->model->StoreData( $Post );
         }
 
-        $return = $this->model->save();
+        $return = $this->model->create( $Post );
 
-        return $return;
+        return $response->withJSON($return, 200, JSON_UNESCAPED_UNICODE);
     }
 
     public function update (Request $request, Response $response, $args)
@@ -55,14 +55,36 @@ class ApiController
         $Post = (array) $request->getParsedBody();
 
         $Update = $this->model->find($args['id']);
-        $Update->make($Post);
+
+        if ( method_exists($this->model, 'UpdateData') ) {
+
+            $Post = $this->model->StoreData( $Post );
+        }
+
+        $Update->make( $Post );
+
+        foreach ( $Post as $Key => $Value ) {
+
+            $Update->{$Key} = $Value;
+        }
 
         $Update->save();
+
+        return $response->withJSON($this->model->find($args['id']), 200, JSON_UNESCAPED_UNICODE);
     }
 
     public function delete (Request $request, Response $response, $args)
     {
+
         $Delete = $this->model->find($args['id']);
-        $Delete->delete();
+
+        $return = ['status' => true, 'message' =>  'Record deleted successfully'];
+
+        if (! $Delete->delete() )
+        {
+            $return = ['status' => false, 'message' =>  'Error deleting record'];
+        }
+
+        return $response->withJSON($return, 200, JSON_UNESCAPED_UNICODE);
     }
 }

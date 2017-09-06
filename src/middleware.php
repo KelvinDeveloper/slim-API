@@ -2,8 +2,6 @@
 
 // Application middleware
 
-// e.g: $app->add(new \Slim\Csrf\Guard);
-
 $JWT = function ($request, $response, $next) {
 
     $Token = str_replace('Bearer ', '', $request->getServerParam('HTTP_AUTHORIZATION'));
@@ -17,3 +15,13 @@ $JWT = function ($request, $response, $next) {
 
     return $next($request, $response);
 };
+
+$app->add(function ($request, $response, $next) {
+
+    $response = $next($request, $response);
+
+    return $response
+        ->withHeader('Access-Control-Allow-Origin', "{$request->getUri()->getScheme()}://{$request->getUri()->getHost()}")
+        ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
+        ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+});
